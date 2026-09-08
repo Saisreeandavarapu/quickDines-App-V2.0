@@ -8,7 +8,7 @@ import { useApp } from '../../context/AppContext';
 
 export const CustomerOTPPage = () => {
   const navigate = useNavigate();
-  const { pendingPhone, loginCustomerSuccess, showToast } = useApp();
+  const { pendingPhone, loginCustomerSuccess, showToast, setActiveCustomerTab } = useApp();
 
   const targetPhone = pendingPhone || "+91 98765 43210";
   const [error, setError] = useState(null);
@@ -25,7 +25,8 @@ export const CustomerOTPPage = () => {
         setIsVerified(true);
         setTimeout(() => {
           loginCustomerSuccess(res.user);
-          navigate('/dashboard');
+          setActiveCustomerTab('menu');
+          navigate('/customer/menu');
         }, 1200);
       }
     } catch (err) {
@@ -51,8 +52,11 @@ export const CustomerOTPPage = () => {
         <SuccessState
           title="You're Verified ✓"
           message="Authentication complete. Connecting you to your journey menu."
-          buttonText="Continue to Customer Dashboard"
-          onAction={() => navigate('/dashboard')}
+          buttonText="Continue to Customer Home"
+          onAction={() => {
+            setActiveCustomerTab('menu');
+            navigate('/customer/menu');
+          }}
         />
       ) : (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-400">

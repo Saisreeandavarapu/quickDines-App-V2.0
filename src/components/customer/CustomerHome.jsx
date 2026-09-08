@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Search,
   Utensils,
@@ -16,7 +16,8 @@ import {
   Flame,
   Filter,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  ArrowUp
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { FOOD_CATEGORIES, TIME_SLOTS } from '../../mockData';
@@ -28,6 +29,23 @@ export const CustomerHome = ({ onSelectFoodItem }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [vegOnly, setVegOnly] = useState(false);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('dinner');
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 250) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const categoryIcons = {
     all: Utensils,
@@ -218,6 +236,18 @@ export const CustomerHome = ({ onSelectFoodItem }) => {
         </div>
 
       </div>
+
+      {/* Floating Scroll-to-Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-20 right-4 md:bottom-24 md:right-8 z-50 p-3.5 bg-[#0B1F5E] hover:bg-[#102A72] text-white rounded-full shadow-floating border border-blue-400/40 transition-all duration-300 animate-in fade-in zoom-in-75 active:scale-90 flex items-center justify-center group"
+          title="Scroll to top"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="w-5 h-5 text-blue-300 group-hover:text-white transition-transform group-hover:-translate-y-0.5" />
+        </button>
+      )}
 
     </div>
   );

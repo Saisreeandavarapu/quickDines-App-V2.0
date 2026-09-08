@@ -101,6 +101,7 @@ export const AppProvider = ({ children }) => {
   const loginCustomerSuccess = (userData) => {
     setCustomerUser({ ...userData, isAuthenticated: true });
     setCurrentRole('customer');
+    setActiveCustomerTab('menu');
     showToast(`Welcome back, ${userData.name || 'Traveler'}!`, 'success');
   };
 

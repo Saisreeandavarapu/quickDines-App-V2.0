@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  Bus, 
-  Bell, 
-  Moon, 
-  Sun, 
-  Building2, 
-  Truck, 
-  Headphones, 
-  ShieldCheck, 
+import {
+  Bus,
+  Bell,
+  Moon,
+  Sun,
+  Building2,
+  Truck,
+  Headphones,
+  ShieldCheck,
   LogOut,
   ChevronDown,
   ShoppingBag,
@@ -31,16 +31,16 @@ import { Logo } from './Logo';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export const Header = () => {
-  const { 
-    currentRole, 
-    switchRole, 
+  const {
+    currentRole,
+    switchRole,
     activeCustomerTab,
-    setActiveCustomerTab, 
-    darkMode, 
-    toggleDarkMode, 
-    bus, 
-    cart, 
-    notifications, 
+    setActiveCustomerTab,
+    darkMode,
+    toggleDarkMode,
+    bus,
+    cart,
+    notifications,
     setNotifications,
     showToast
   } = useApp();
@@ -52,6 +52,11 @@ export const Header = () => {
   const [showRoleDropdown, setShowRoleDropdown] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showBusDetailsModal, setShowBusDetailsModal] = useState(false);
+
+  // Remove top header when on Customer QR Landing page (activeCustomerTab === 'landing')
+  if (currentRole === 'customer' && activeCustomerTab === 'landing') {
+    return null;
+  }
 
   const cartCount = cart.reduce((acc, curr) => acc + curr.quantity, 0);
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -72,10 +77,10 @@ export const Header = () => {
     switch (currentRole) {
       case 'customer':
         return [
-          { label: 'Discover Menu', icon: Utensils, action: () => { setActiveCustomerTab('menu'); navigate('/customer/menu'); }, active: activeCustomerTab === 'menu' || location.pathname === '/customer/menu' },
-          { label: 'Live Tracking', icon: Navigation, action: () => { setActiveCustomerTab('tracking'); navigate('/customer'); }, active: activeCustomerTab === 'tracking' },
-          { label: 'My Orders', icon: Clock, action: () => { setActiveCustomerTab('history'); navigate('/customer'); }, active: activeCustomerTab === 'history' },
-          { label: 'Seat QR', icon: QrCode, action: () => { setActiveCustomerTab('landing'); navigate('/customer'); }, active: activeCustomerTab === 'landing' },
+          { label: 'Discover Menu', icon: Utensils, action: () => { setActiveCustomerTab('menu'); navigate('/customer/menu'); window.scrollTo({ top: 0, behavior: 'smooth' }); }, active: activeCustomerTab === 'menu' || location.pathname === '/customer/menu' },
+          { label: 'Live Tracking', icon: Navigation, action: () => { setActiveCustomerTab('tracking'); navigate('/customer'); window.scrollTo({ top: 0, behavior: 'smooth' }); }, active: activeCustomerTab === 'tracking' },
+          { label: 'My Orders', icon: Clock, action: () => { setActiveCustomerTab('history'); navigate('/customer'); window.scrollTo({ top: 0, behavior: 'smooth' }); }, active: activeCustomerTab === 'history' },
+          { label: 'Seat QR', icon: QrCode, action: () => { setActiveCustomerTab('landing'); navigate('/customer'); window.scrollTo({ top: 0, behavior: 'smooth' }); }, active: activeCustomerTab === 'landing' },
         ];
       case 'restaurant':
         return [
@@ -118,15 +123,15 @@ export const Header = () => {
   return (
     <>
       <header className="sticky top-0 z-40 w-full bg-[#071535]/95 backdrop-blur-2xl border-b border-white/10 shadow-2xl transition-all duration-300 overflow-x-clip">
-        
+
         {/* Glow accent top hairline */}
         <div className="h-[2px] w-full bg-gradient-to-r from-blue-600 via-indigo-400 to-emerald-400"></div>
 
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 h-16 sm:h-18 flex items-center justify-between gap-2">
-          
+
           {/* LEFT: Brand Logo & Optional Bus Pill */}
           <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
-            <button 
+            <button
               onClick={() => {
                 if (currentRole === 'customer') {
                   setActiveCustomerTab('landing');
@@ -140,14 +145,14 @@ export const Header = () => {
                 } else if (currentRole === 'support') {
                   navigate('/support');
                 }
-              }} 
+              }}
               className="text-left focus:outline-none hover:opacity-90 transition flex items-center gap-2 group flex-shrink-0"
             >
               <Logo size="sm" smSize="md" lightMode={true} showSubtitle={false} />
             </button>
 
             {/* Live Bus Status Pill (Visible on XL+ screens to prevent laptop overcrowding) */}
-            <button 
+            <button
               onClick={() => setShowBusDetailsModal(true)}
               className="hidden xl:flex items-center gap-2 bg-gradient-to-r from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 px-3 py-1.5 rounded-full border border-white/15 text-xs font-medium transition shadow-sm active:scale-95 group flex-shrink-0"
               title="Click to view bus live telemetry"
@@ -156,14 +161,14 @@ export const Header = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              
+
               <div className="flex items-center gap-1 text-blue-200">
                 <Bus className="w-3.5 h-3.5 text-blue-400 group-hover:scale-110 transition" />
                 <span className="text-white font-extrabold">{bus.busNumber}</span>
               </div>
               <span className="text-white/20 hidden 2xl:inline">•</span>
               <span className="text-slate-300 font-semibold truncate max-w-[120px] hidden 2xl:inline">{bus.route}</span>
-              
+
               <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-emerald-400/30 flex items-center gap-1">
                 <Activity className="w-3 h-3 text-emerald-400 animate-pulse" />
                 ETA {bus.etaMinutes}m
@@ -180,11 +185,10 @@ export const Header = () => {
                   <button
                     key={idx}
                     onClick={link.action}
-                    className={`flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 whitespace-nowrap ${
-                      link.active
+                    className={`flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 whitespace-nowrap ${link.active
                         ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-glow'
                         : 'text-slate-300 hover:text-white hover:bg-white/10'
-                    }`}
+                      }`}
                   >
                     <Icon className={`w-3.5 h-3.5 ${link.active ? 'text-white' : 'text-blue-300'}`} />
                     <span>{link.label}</span>
@@ -196,7 +200,7 @@ export const Header = () => {
 
           {/* RIGHT: Role Switcher & Utilities (Never clipped, flex-shrink-0) */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
-            
+
             {/* Quick Role Switcher Pill Dropdown */}
             <div className="relative hidden sm:block">
               <button
@@ -210,7 +214,7 @@ export const Header = () => {
               </button>
 
               {showRoleDropdown && (
-                <div 
+                <div
                   className="absolute right-0 mt-2 w-72 bg-[#071535] border border-white/20 rounded-2xl shadow-floating py-2 z-50 animate-in fade-in zoom-in-95 backdrop-blur-2xl"
                   onMouseLeave={() => setShowRoleDropdown(false)}
                 >
@@ -243,11 +247,10 @@ export const Header = () => {
                             navigate('/login');
                           }
                         }}
-                        className={`w-full text-left px-3.5 py-2.5 flex items-start gap-3 hover:bg-white/10 transition ${
-                          isActive 
-                            ? 'bg-gradient-to-r from-blue-600/30 to-indigo-600/30 border-l-4 border-blue-400 text-white font-semibold' 
+                        className={`w-full text-left px-3.5 py-2.5 flex items-start gap-3 hover:bg-white/10 transition ${isActive
+                            ? 'bg-gradient-to-r from-blue-600/30 to-indigo-600/30 border-l-4 border-blue-400 text-white font-semibold'
                             : 'text-slate-300'
-                        }`}
+                          }`}
                       >
                         <div className={`p-1.5 rounded-lg bg-gradient-to-br ${r.color} text-white shadow-sm flex-shrink-0 mt-0.5`}>
                           <Icon className="w-3.5 h-3.5" />
@@ -300,7 +303,7 @@ export const Header = () => {
 
               {/* Notification Popover Drawer */}
               {showNotifications && (
-                <div 
+                <div
                   className="fixed inset-x-3 top-16 sm:absolute sm:inset-auto sm:right-0 sm:mt-2 sm:w-80 max-w-sm ml-auto bg-[#071535] border border-white/20 rounded-2xl shadow-floating p-3.5 z-50 text-slate-100 animate-in fade-in zoom-in-95 backdrop-blur-2xl"
                   onMouseLeave={() => setShowNotifications(false)}
                 >
@@ -310,7 +313,7 @@ export const Header = () => {
                     </h4>
                     <div className="flex items-center gap-2">
                       {unreadCount > 0 && (
-                        <button 
+                        <button
                           onClick={markAllNotificationsRead}
                           className="text-[10px] bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 px-2 py-0.5 rounded-full border border-blue-400/30 transition"
                         >
@@ -328,13 +331,12 @@ export const Header = () => {
 
                   <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
                     {notifications.map(n => (
-                      <div 
-                        key={n.id} 
-                        className={`p-2.5 rounded-xl border text-xs transition ${
-                          !n.read 
-                            ? 'bg-blue-600/15 border-blue-400/30' 
+                      <div
+                        key={n.id}
+                        className={`p-2.5 rounded-xl border text-xs transition ${!n.read
+                            ? 'bg-blue-600/15 border-blue-400/30'
                             : 'bg-white/5 border-white/10 hover:bg-white/10'
-                        }`}
+                          }`}
                       >
                         <div className="flex items-center justify-between font-semibold text-white mb-0.5">
                           <span className="flex items-center gap-1.5">
@@ -376,7 +378,7 @@ export const Header = () => {
         {/* MOBILE MENU SLIDE-DOWN DRAWER (< md) */}
         {showMobileMenu && (
           <div className="md:hidden bg-[#071535] border-b border-white/20 px-4 pt-3 pb-6 space-y-4 animate-in fade-in slide-in-from-top-4 backdrop-blur-2xl">
-            
+
             {/* 1. Live Bus Status Badge (Mobile Drawer) */}
             <button
               onClick={() => {
@@ -416,11 +418,10 @@ export const Header = () => {
                           link.action();
                           setShowMobileMenu(false);
                         }}
-                        className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition active:scale-95 ${
-                          link.active
+                        className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition active:scale-95 ${link.active
                             ? 'bg-gradient-to-r from-blue-600 to-indigo-600 border-blue-400 text-white font-bold shadow-glow'
                             : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10'
-                        }`}
+                          }`}
                       >
                         <Icon className="w-4 h-4 flex-shrink-0 text-blue-300" />
                         <span className="text-xs truncate font-semibold">{link.label}</span>
@@ -461,11 +462,10 @@ export const Header = () => {
                           navigate('/login');
                         }
                       }}
-                      className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition active:scale-95 ${
-                        isActive
+                      className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition active:scale-95 ${isActive
                           ? 'bg-gradient-to-r from-blue-600 to-indigo-600 border-blue-400 text-white font-bold shadow-glow'
                           : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10'
-                      }`}
+                        }`}
                     >
                       <div className={`p-1.5 rounded-lg bg-gradient-to-br ${r.color} text-white shadow-sm flex-shrink-0`}>
                         <Icon className="w-3.5 h-3.5" />

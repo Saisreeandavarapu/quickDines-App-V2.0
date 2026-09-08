@@ -93,7 +93,7 @@ export const QRScannerPage = () => {
       {/* Top Header */}
       <header className="w-full max-w-lg mx-auto flex items-center justify-between py-3 border-b border-white/10">
         <Logo size="md" lightMode={true} showSubtitle={true} />
-        <div className="flex items-center gap-1.5 bg-blue-500/20 px-3 py-1 rounded-full border border-blue-400/30 text-xs font-bold text-blue-200">
+        <div className="flex items-center gap-1.5 bg-blue-500/20 px-1 py-1 rounded-full border border-blue-400/30 text-xs font-bold text-blue-200">
           <Sparkles className="w-3.5 h-3.5 text-amber-300" />
           <span>Bus Entry Scanner</span>
         </div>
@@ -235,7 +235,7 @@ export const QRScannerPage = () => {
               <button
                 onClick={() => handleSimulateScan("QD-BUS-1024")}
                 disabled={isScanning}
-                className="w-full h-12 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/20 transition flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full h-12 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/20 transition flex items-center justify-center gap-1 cursor-pointer"
               >
                 {isScanning ? (
                   <span>Scanning Bus QR...</span>

@@ -6,13 +6,13 @@ import { Shield, Bus, Utensils, Truck, Headphones, ArrowRight, CheckCircle, Smar
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const { switchRole, showToast } = useApp();
+  const { switchRole, showToast, setActiveCustomerTab } = useApp();
   const [email, setEmail] = useState('rahul.sharma@quickdines.com');
   const [password, setPassword] = useState('••••••••••••');
   const [selectedRolePreset, setSelectedRolePreset] = useState('customer');
 
   const roleRoutes = {
-    customer: '/dashboard',
+    customer: '/customer/menu',
     admin: '/admin/dashboard',
     restaurant: '/restaurant/orders',
     driver: '/driver/orders',
@@ -22,7 +22,10 @@ export const LoginPage = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     switchRole(selectedRolePreset);
-    const targetRoute = roleRoutes[selectedRolePreset] || '/dashboard';
+    if (selectedRolePreset === 'customer') {
+      setActiveCustomerTab('menu');
+    }
+    const targetRoute = roleRoutes[selectedRolePreset] || '/customer/menu';
     navigate(targetRoute);
     showToast(`Authenticated successfully as ${selectedRolePreset.toUpperCase()}`, 'success');
   };
@@ -37,7 +40,7 @@ export const LoginPage = () => {
 
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row bg-[#F7F9FC] dark:bg-[#071535]">
-      
+
       {/* Left: Deep Navy Branded Section */}
       <div className="lg:w-1/2 bg-[#0B1F5E] text-white p-8 lg:p-16 flex flex-col justify-between relative overflow-hidden">
         {/* Background Subtle Gradient & Grid */}
@@ -53,11 +56,11 @@ export const LoginPage = () => {
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             TRANSIT DINING PLATFORM V2.0
           </div>
-          <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight mb-6">
+          <h1 className="text-3xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight mb-6">
             Smarter Dining.<br />
             <span className="text-blue-400">Better Journeys.</span>
           </h1>
-          <p className="text-base text-blue-100/90 leading-relaxed">
+          <p className="text-base text-blue-100/90 leading-relaxed text-xs">
             Connecting passengers, restaurants, and drivers through one intelligent transit dining ecosystem. Enjoy gourmet hot meals delivered straight to your bus seat with real-time GPS tracking.
           </p>
 
@@ -82,7 +85,7 @@ export const LoginPage = () => {
       {/* Right: Modern SaaS Split Login Card */}
       <div className="lg:w-1/2 p-8 lg:p-16 flex items-center justify-center">
         <div className="w-full max-w-md space-y-8">
-          
+
           <div>
             <h2 className="text-3xl font-extrabold text-[#0B1F5E] dark:text-white tracking-tight">
               Sign In to QuickDines
@@ -106,11 +109,10 @@ export const LoginPage = () => {
                     key={preset.id}
                     type="button"
                     onClick={() => setSelectedRolePreset(preset.id)}
-                    className={`flex items-center justify-between p-3.5 rounded-2xl border text-left transition ${
-                      isSelected
-                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-white ring-2 ring-blue-500/20'
-                        : 'border-slate-200 dark:border-white/10 bg-white dark:bg-[#0A1738] text-slate-700 dark:text-slate-300 hover:border-slate-300'
-                    }`}
+                    className={`flex items-center justify-between p-3.5 rounded-2xl border text-left transition ${isSelected
+                      ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-white ring-2 ring-blue-500/20'
+                      : 'border-slate-200 dark:border-white/10 bg-white dark:bg-[#0A1738] text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                      }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-xl ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'}`}>
@@ -185,7 +187,7 @@ export const LoginPage = () => {
                 onClick={() => navigate('/login')}
                 className="text-blue-600 dark:text-blue-400 font-bold hover:underline flex items-center gap-1"
               >
-                <Smartphone className="w-3.5 h-3.5" />
+                <Smartphone className="w-2 h-3.5" />
                 <span>Passenger OTP Auth</span>
               </button>
 

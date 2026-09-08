@@ -7,7 +7,7 @@ import { useApp } from '../../context/AppContext';
 
 export const RegistrationPage = () => {
   const navigate = useNavigate();
-  const { loginCustomerSuccess } = useApp();
+  const { loginCustomerSuccess, setActiveCustomerTab } = useApp();
   const [isRegistered, setIsRegistered] = useState(false);
   const [registeredData, setRegisteredData] = useState(null);
 
@@ -28,8 +28,11 @@ export const RegistrationPage = () => {
         <SuccessState
           title="Welcome to QuickDines! 🎉"
           message={`Your profile is ready, ${registeredData?.firstName || 'Traveler'}. Your meal preferences and seat delivery defaults are saved.`}
-          buttonText="Continue to QuickDines Dashboard"
-          onAction={() => navigate('/dashboard')}
+          buttonText="Continue to Customer Home"
+          onAction={() => {
+            setActiveCustomerTab('menu');
+            navigate('/customer/menu');
+          }}
         />
       ) : (
         <RegistrationForm

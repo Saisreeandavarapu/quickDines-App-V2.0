@@ -15,6 +15,11 @@ export const CustomerApp = () => {
   const { activeCustomerTab, setActiveCustomerTab, cart } = useApp();
   const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 
+  const handleTabChange = (tab) => {
+    setActiveCustomerTab(tab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const cartCount = cart.reduce((acc, curr) => acc + curr.quantity, 0);
   const cartSubtotal = cart.reduce((acc, curr) => acc + curr.itemTotal, 0);
 
@@ -49,7 +54,7 @@ export const CustomerApp = () => {
       {cartCount > 0 && activeCustomerTab === 'menu' && (
         <div className="hidden md:block fixed bottom-6 right-6 z-40 animate-in fade-in slide-in-from-bottom-4">
           <button
-            onClick={() => setActiveCustomerTab('cart')}
+            onClick={() => handleTabChange('cart')}
             className="bg-[#0B1F5E] hover:bg-[#102A72] text-white p-4 rounded-2xl shadow-floating border border-blue-400/40 flex items-center gap-4 transition group active:scale-95"
           >
             <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white shadow-subtle flex-shrink-0">
@@ -74,7 +79,7 @@ export const CustomerApp = () => {
         {/* Top Strip: Deep Navy Cart Action Bar (Shown when items in cart & on menu tab) */}
         {cartCount > 0 && activeCustomerTab === 'menu' && (
           <button
-            onClick={() => setActiveCustomerTab('cart')}
+            onClick={() => handleTabChange('cart')}
             className="w-full bg-[#0B1F5E] hover:bg-[#102A72] text-white px-4 py-3 border-b border-blue-400/20 flex items-center justify-between transition group active:scale-98"
           >
             <div className="flex items-center gap-2.5">
@@ -97,7 +102,7 @@ export const CustomerApp = () => {
         {/* Bottom Strip: Navigation Tabs */}
         <div className="py-2 px-1 flex items-center justify-around">
           <button
-            onClick={() => setActiveCustomerTab('landing')}
+            onClick={() => handleTabChange('landing')}
             className="flex flex-col items-center gap-0.5 text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-white transition active:scale-95 px-2 py-1"
           >
             <QrCode className="w-4 h-4" />
@@ -105,7 +110,7 @@ export const CustomerApp = () => {
           </button>
 
           <button
-            onClick={() => setActiveCustomerTab('menu')}
+            onClick={() => handleTabChange('menu')}
             className={`flex flex-col items-center gap-0.5 transition active:scale-95 px-2 py-1 ${
               activeCustomerTab === 'menu' ? 'text-blue-600 dark:text-blue-400 font-extrabold scale-105' : 'text-slate-500 dark:text-slate-400'
             }`}
@@ -115,7 +120,7 @@ export const CustomerApp = () => {
           </button>
 
           <button
-            onClick={() => setActiveCustomerTab('cart')}
+            onClick={() => handleTabChange('cart')}
             className={`relative flex flex-col items-center gap-0.5 transition active:scale-95 px-2 py-1 ${
               activeCustomerTab === 'cart' ? 'text-blue-600 dark:text-blue-400 font-extrabold scale-105' : 'text-slate-500 dark:text-slate-400'
             }`}
@@ -130,7 +135,7 @@ export const CustomerApp = () => {
           </button>
 
           <button
-            onClick={() => setActiveCustomerTab('tracking')}
+            onClick={() => handleTabChange('tracking')}
             className={`flex flex-col items-center gap-0.5 transition active:scale-95 px-2 py-1 ${
               activeCustomerTab === 'tracking' ? 'text-blue-600 dark:text-blue-400 font-extrabold scale-105' : 'text-slate-500 dark:text-slate-400'
             }`}
@@ -140,7 +145,7 @@ export const CustomerApp = () => {
           </button>
 
           <button
-            onClick={() => setActiveCustomerTab('history')}
+            onClick={() => handleTabChange('history')}
             className={`flex flex-col items-center gap-0.5 transition active:scale-95 px-2 py-1 ${
               activeCustomerTab === 'history' ? 'text-blue-600 dark:text-blue-400 font-extrabold scale-105' : 'text-slate-500 dark:text-slate-400'
             }`}
@@ -150,7 +155,7 @@ export const CustomerApp = () => {
           </button>
 
           <button
-            onClick={() => setActiveCustomerTab('profile')}
+            onClick={() => handleTabChange('profile')}
             className={`flex flex-col items-center gap-0.5 transition active:scale-95 px-2 py-1 ${
               activeCustomerTab === 'profile' ? 'text-blue-600 dark:text-blue-400 font-extrabold scale-105' : 'text-slate-500 dark:text-slate-400'
             }`}

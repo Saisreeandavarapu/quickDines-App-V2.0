@@ -8,7 +8,7 @@ export const GetStartedCard = ({ journey, onGetStarted, onChangeJourney }) => {
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      
+
       {/* Dynamic Time Greeting & Heading */}
       <div className="space-y-2">
         <span className="inline-flex items-center gap-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full text-xs font-extrabold uppercase border border-blue-200 dark:border-blue-800">

@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppProvider, useApp } from './context/AppContext';
 import { Header } from './components/common/Header';
 import { Toast } from './components/common/Toast';
@@ -25,11 +25,23 @@ import { SupportPanel } from './components/support/SupportPanel';
 import { SuperAdminPanel } from './components/admin/SuperAdminPanel';
 import { QRManagement } from './components/admin/QRManagement';
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  const { activeCustomerTab } = useApp();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname, activeCustomerTab]);
+
+  return null;
+};
+
 const AppContent = () => {
   const { currentRole } = useApp();
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F7F9FC] dark:bg-[#071535] text-[#0F172A] dark:text-slate-100 font-sans selection:bg-[#2563EB] selection:text-white">
+      <ScrollToTop />
       {/* Top Navigation Header (hidden on QR scanner and Auth screens) */}
       {!['/scan', '/get-started', '/login', '/customer/login', '/verify-otp', '/register', '/admin/login', '/admin/verify-otp'].includes(window.location.pathname) && (
         <Header />
@@ -49,7 +61,7 @@ const AppContent = () => {
           <Route path="/scan" element={<QRScannerPage />} />
           <Route path="/get-started" element={<GetStartedPage />} />
           <Route path="/verify-otp" element={<CustomerOTPPage />} />
-          <Route path="/dashboard" element={<CustomerDashboardPage />} />
+          <Route path="/dashboard" element={<Navigate to="/customer/menu" replace />} />
           <Route path="/register" element={<RegistrationPage />} />
 
           {/* Super Admin Authentication Flow */}

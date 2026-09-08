@@ -14,7 +14,13 @@ export const QRLandingPage = () => {
 
       {/* Top Bar (Stacked on small screens to prevent logo crowding) */}
       <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
-        <Logo size="md" lightMode={true} showSubtitle={false} />
+        <button
+          onClick={() => setActiveCustomerTab('menu')}
+          className="text-left focus:outline-none hover:opacity-90 transition active:scale-95 flex-shrink-0"
+          title="Go to Menu"
+        >
+          <Logo size="md" lightMode={true} showSubtitle={false} />
+        </button>
         <span className="inline-flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           BUS QR VERIFIED
