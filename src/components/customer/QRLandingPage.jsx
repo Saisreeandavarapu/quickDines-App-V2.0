@@ -29,7 +29,7 @@ export const QRLandingPage = () => {
 
       {/* Main Welcome Hero */}
       <div className="relative z-10 my-auto max-w-md mx-auto w-full space-y-5 text-center pt-4">
-        
+
         <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-navy-gradient p-0.5 shadow-floating flex items-center justify-center">
           <div className="w-full h-full bg-[#0B1F5E] rounded-[22px] flex items-center justify-center border border-white/20">
             <Bus className="w-8 h-8 sm:w-10 sm:h-10 text-blue-400 animate-bus-float" />
@@ -84,7 +84,7 @@ export const QRLandingPage = () => {
         {/* Explore CTA */}
         <button
           onClick={() => setActiveCustomerTab('menu')}
-          className="w-full h-13 sm:h-14 bg-navy-gradient hover:opacity-95 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-glow transition flex items-center justify-center gap-3 border border-white/20 active:scale-95"
+          className="w-full h-14 sm:h-16 bg-navy-gradient hover:opacity-95 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-glow transition flex items-center justify-center gap-3 border border-white/20 active:scale-95"
         >
           <span>Explore Journey Menu</span>
           <ArrowRight className="w-5 h-5" />

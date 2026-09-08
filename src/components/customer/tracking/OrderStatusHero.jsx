@@ -106,12 +106,12 @@ export const OrderStatusHero = ({ order, bus }) => {
           </span>
         </div>
 
-        <div className="text-right flex-shrink-0 space-y-1">
+        {/* <div className="text-right flex-shrink-0 space-y-1">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-amber-400/20 border border-amber-400/40 text-amber-300 flex items-center justify-center ml-auto">
             <Clock className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
           </div>
-          <span className="text-[9px] text-blue-200 block font-mono">Updated just now</span>
-        </div>
+          <span className="text-[8px] text-blue-200 block font-mono">Updated just now</span>
+        </div> */}
       </div>
     </div>
   );
