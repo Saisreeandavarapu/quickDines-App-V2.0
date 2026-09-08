@@ -84,7 +84,7 @@ export const QRLandingPage = () => {
         {/* Explore CTA */}
         <button
           onClick={() => setActiveCustomerTab('menu')}
-          className="w-full h-14 sm:h-16 bg-navy-gradient hover:opacity-95 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-glow transition flex items-center justify-center gap-3 border border-white/20 active:scale-95"
+          className="w-full h-14  sm:h-18 bg-navy-gradient hover:opacity-95 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-glow transition flex items-center justify-center gap-3 border border-white/20 active:scale-95"
         >
           <span>Explore Journey Menu</span>
           <ArrowRight className="w-5 h-5" />
